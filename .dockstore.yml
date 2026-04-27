@@ -1,0 +1,8 @@
+version: 1.2 # The .dockstore.yml schema version
+workflows:
+  - name: genoppi-saintexp # name to appear in Dockstore
+    subclass: WDL # descriptor language
+    primaryDescriptorPath: /genoppi-saintexp.wdl # path to WDL file in repo
+    authors:
+      - name: "Yu-Han Hsu"
+        email: "yuhahsu@broadinstitute.org"
