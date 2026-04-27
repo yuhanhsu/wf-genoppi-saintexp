@@ -8,7 +8,7 @@ steps:
   args: [
     'build',
     '-t',
-    '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${COMMIT_SHA}', 
+    '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${_IMAGE_TAG}', 
     '.'
   ]
 
@@ -16,15 +16,16 @@ steps:
 - name: 'gcr.io/cloud-builders/docker'
   args: [
     'push', 
-    '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${COMMIT_SHA}'
+    '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${_IMAGE_TAG}'
   ]
 
 # define image to be pushed
 images:
-- '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${COMMIT_SHA}'
+- '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${_IMAGE_TAG}'
 
 # use substitutions for flexibility
 substitutions:
   _LOCATION: us-central1
   _REPOSITORY: genoppi
   _IMAGE_NAME: genoppi-saintexp
+  _IMAGE_TAG: 2026.04.27

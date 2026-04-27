@@ -2,6 +2,8 @@ version 1.0
 
 workflow main {
 	input {
+		String dockerImage = "us-central1-docker.pkg.dev/lage-genoppi/genoppi/genoppi-saintexp"
+		String dockerTag = "2026.04.27"
 		File msFile
 		String msSheet
 		String msSite
@@ -35,6 +37,7 @@ workflow main {
 
 task run_genoppi_saintexp {
 	input {
+		String dockerTag="2026.04.27"
 		File msFile
 		String msSheet
 		String msSite
@@ -93,7 +96,7 @@ task run_genoppi_saintexp {
 	}
 	
 	runtime {
-		docker: "us-central1-docker.pkg.dev/lage-genoppi/genoppi/genoppi-saintexp"
+		docker: "~{dockerImage}:~{dockerTag}"
 		memory: "2 GB"
 		cpu: 1
 		preemptible: 1
