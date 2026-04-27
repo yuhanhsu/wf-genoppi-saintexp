@@ -1,0 +1,30 @@
+### A build trigger set up in the Google lage-genoppi project will
+### initiate Cloud Build using this file upon a push to master branch
+
+steps:
+    
+# (1) build docker image using Dockerfile
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'build',
+    '-t',
+    '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${COMMIT_SHA}', 
+    '.'
+  ]
+
+# (2) push docker image to Artifact Registry
+- name: 'gcr.io/cloud-builders/docker'
+  args: [
+    'push', 
+    '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${COMMIT_SHA}'
+  ]
+
+# define image to be pushed
+images:
+- '${_LOCATION}-docker.pkg.dev/${PROJECT_ID}/${_REPOSITORY}/${_IMAGE_NAME}:${COMMIT_SHA}'
+
+# use substitutions for flexibility
+substitutions:
+  _LOCATION: us-central1
+  _REPOSITORY: genoppi
+  _IMAGE_NAME: genoppi-saintexp-scripts
