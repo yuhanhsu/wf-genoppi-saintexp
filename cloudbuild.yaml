@@ -27,4 +27,4 @@ images:
 substitutions:
   _LOCATION: us-central1
   _REPOSITORY: genoppi
-  _IMAGE_NAME: genoppi-saintexp-scripts
+  _IMAGE_NAME: genoppi-saintexp
