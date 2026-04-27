@@ -18,6 +18,8 @@ workflow main {
 	
 	call run_genoppi_saintexp {
 		input:
+			dockerImage = dockerImage,
+			dockerTag = dockerTag,
 			msFile = msFile,
 			msSheet = msSheet,
 			msSite = msSite,
@@ -37,7 +39,8 @@ workflow main {
 
 task run_genoppi_saintexp {
 	input {
-		String dockerTag="2026.04.27"
+		String dockerImage
+		String dockerTag
 		File msFile
 		String msSheet
 		String msSite
