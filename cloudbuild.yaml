@@ -1,5 +1,5 @@
 ### A build trigger set up in the Google lage-genoppi project will
-### initiate Cloud Build using this file upon a push to master branch
+### initiate Cloud Build using this file (manual invocation)
 
 steps:
     
