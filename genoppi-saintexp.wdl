@@ -2,8 +2,14 @@ version 1.0
 
 workflow main {
 	input {
+		# docker image with Genoppi, SAINTexpress, and gcloud CLI
 		String dockerImage = "us-central1-docker.pkg.dev/lage-genoppi/genoppi/genoppi-saintexp"
-		String dockerTag = "2026.04.27"
+		String dockerTag = "2026.05.05"
+		
+		# bucket to store output files
+		String destination
+		
+		# input arguments for R scripts
 		File msFile
 		String msSheet
 		String msSite
@@ -20,6 +26,7 @@ workflow main {
 		input:
 			dockerImage = dockerImage,
 			dockerTag = dockerTag,
+			destination = destination,
 			msFile = msFile,
 			msSheet = msSheet,
 			msSite = msSite,
@@ -33,7 +40,8 @@ workflow main {
 	}
 	
 	output {
-		File outFile = run_genoppi_saintexp.outTarball
+		# bucket with output files
+		String outLink = run_genoppi_saintexp.outLink
 	}
 }
 
@@ -41,6 +49,7 @@ task run_genoppi_saintexp {
 	input {
 		String dockerImage
 		String dockerTag
+		String destination
 		File msFile
 		String msSheet
 		String msSite
@@ -54,7 +63,7 @@ task run_genoppi_saintexp {
 	}
 
 	command <<<
-	
+		echo "### run Genoppi R script"	
 		Rscript /usr/local/src/runGenoppi.r \
 		"~{msFile}" \
 		"~{msSheet}" \
@@ -67,6 +76,7 @@ task run_genoppi_saintexp {
 		"~{controls}" \
 		"~{baitInWeb}"
 		
+		echo "### run SAINTexpress-int R script"
 		Rscript /usr/local/src/runSAINTexpressInt.r \
 		"~{msFile}" \
 		"~{msSheet}" \
@@ -79,6 +89,7 @@ task run_genoppi_saintexp {
 		"~{controls}" \
 		"~{baitInWeb}"
 		
+		echo "### run SAINTexpress-spc R script"
 		Rscript /usr/local/src/runSAINTexpressSpc.r \
 		"~{msFile}" \
 		"~{msSheet}" \
@@ -91,11 +102,14 @@ task run_genoppi_saintexp {
 		"~{controls}" \
 		"~{baitInWeb}"
 		
-		tar -czvf "~{outDir}.tar.gz" "~{outDir}"
+		echo "### upload output directory to destination bucket"
+		gcloud storage cp -r "~{outDir}" "~{destination}/~{ourDir}"
+
+		echo "~{destination}/~{ourDir}" > outLink.txt
 	>>>
 
-	output {		
-		File outTarball = "~{outDir}.tar.gz"
+	output {
+		String outLink = read_string("outLink.txt")
 	}
 	
 	runtime {

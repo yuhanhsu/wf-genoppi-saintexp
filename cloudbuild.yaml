@@ -28,4 +28,4 @@ substitutions:
   _LOCATION: us-central1
   _REPOSITORY: genoppi
   _IMAGE_NAME: genoppi-saintexp
-  _IMAGE_TAG: 2026.04.27
+  _IMAGE_TAG: 2026.05.05
