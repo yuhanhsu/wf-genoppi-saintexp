@@ -7,3 +7,6 @@ Files for running Genoppi and SAINTexpress IP-MS analysis workflow on Terra
 - genoppi-saintexp.wdl to define the workflow to be run using the docker image
 - .dockstore.yml to sync workflow WDL to [Dockstore](https://dockstore.org/workflows/github.com/yuhanhsu/wf-genoppi-saintexp/genoppi-saintexp:main?tab=info)
 
+Cloud Build run time: ~15 minutes
+Dockstore run time: a few minutes
+Terra workflow run time: XXX
