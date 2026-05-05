@@ -105,7 +105,7 @@ task run_genoppi_saintexp {
 		echo "### upload output directory to destination bucket"
 		gcloud storage cp -r "~{outDir}" "~{destination}/~{outDir}"
 
-		echo "~{destination}/~{outDir}" > outLink.txt
+		echo "~{destination}/~{outDir}/~{date}.~{bait}.~{cellType}.~{msSite}" > outLink.txt
 	>>>
 
 	output {
